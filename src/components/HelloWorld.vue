@@ -37,6 +37,28 @@
         </div>
       </div>
     </div>
+    <div class="sliders">
+      <div class="options">
+        Slowing Cooef: {{ expoSlow }}
+        <v-slider
+          v-model="expoSlow"
+          step="0.1"
+          max="1"
+          min="0"
+          ticks
+        ></v-slider>
+      </div>
+      <div class="options">
+        Rem Speed Cooef: {{ expoRemSpeed }}
+        <v-slider
+          v-model="expoRemSpeed"
+          step="0.1"
+          max="1"
+          min="0"
+          ticks
+        ></v-slider>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,6 +77,8 @@ export default {
       scrollLeft: 0,
       startX: 0,
       momentumID: null,
+      expoSlow: 0.8,
+      expoRemSpeed: 0.8
     };
   },
   methods: {
@@ -93,8 +117,8 @@ export default {
     },
     momentumLoop() {
       this.$refs.timeline.scrollLeft += this.velX;
-      this.velX *= 0.8;
-      if (Math.abs(this.velX) > 0.8) {
+      this.velX *= this.expoSlow;
+      if (Math.abs(this.velX) > this.expoRemSpeed) {
         this.momentumID = requestAnimationFrame(this.momentumLoop);
       }
     },
@@ -104,6 +128,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.options {
+  width: 40%;
+  text-align: center;
+  color: white;
+  padding-top: 40px;
+}
+.sliders {
+  background-color: rgba(71, 71, 71, 0.397);
+  display: flex;
+  width: 70vw;
+  height: 20vh;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 15vw;
+}
 .timeline-item-container {
   display: flex;
   padding: 0px 80px;
